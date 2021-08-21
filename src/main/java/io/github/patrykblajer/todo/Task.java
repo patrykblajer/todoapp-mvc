@@ -18,14 +18,16 @@ public class Task {
     private LocalDate finalDate;
     @Transient
     private String status;
+    private boolean done;
 
     public Task() {
     }
 
-    public Task(String description, Category category, LocalDate startDate) {
+    public Task(String description, Category category, LocalDate startDate, boolean done) {
         this.description = description;
         this.category = category;
         this.startDate = startDate;
+        this.done = done;
     }
 
     public Long getId() {
@@ -74,5 +76,13 @@ public class Task {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 }

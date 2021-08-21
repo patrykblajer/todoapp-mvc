@@ -1,6 +1,7 @@
 package io.github.patrykblajer.todo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,17 +11,19 @@ import java.time.temporal.ChronoUnit;
 
 @Controller
 public class TodoController {
-    private final TodoRepo todoRepo;
+    private final TodoRepository todoRepository;
 
     @Autowired
-    public TodoController(TodoRepo todoRepo) {
-        this.todoRepo = todoRepo;
+    public TodoController(TodoRepository todoRepository) {
+        this.todoRepository = todoRepository;
     }
 
     @GetMapping("/")
     public String index(String description, Category category, Model model) {
-        var newTask = new Task(description, category, LocalDate.now());
-        var notDoneList = todoRepo.findNotDoneOrderByDateAsc();
+        var newTask = new Task(description, category, LocalDate.now(), false);
+        Sort byStartDateAsc = Sort.by(Sort.Direction.ASC, "startDate");
+        var notDoneList = todoRepository.getSortedTasks(false, byStartDateAsc);
+
         model.addAttribute("newTask", newTask);
         model.addAttribute("notDoneList", notDoneList);
 
@@ -32,27 +35,31 @@ public class TodoController {
 
     @PostMapping("/save")
     public String add(Task task) {
-        todoRepo.save(task);
-        return "added";
+        todoRepository.save(task);
+        return "redirect:/";
     }
 
     @GetMapping("/archive")
     public String getDoneList(Model model) {
-        var doneList = todoRepo.findDoneOrderByDateDesc();
+        Sort byFinalDateDesc = Sort.by(Sort.Direction.DESC, "finalDate");
+        var doneList = todoRepository.getSortedTasks(true, byFinalDateDesc);
         model.addAttribute("doneList", doneList);
         return "archive";
     }
 
     @PostMapping(value = "/delete/{id}")
     public String deleteTask(@PathVariable Long id) {
-        todoRepo.deleteById(id);
-        return "deleted";
+        todoRepository.deleteById(id);
+        return "redirect:/";
     }
 
     @PostMapping(value = "/done/{id}")
     public String getTaskDone(@PathVariable Long id) {
-        todoRepo.setFinalDate(LocalDate.now(), id);
-        return "done";
+        var taskToDone = todoRepository.getById(id);
+        taskToDone.setDone(true);
+        taskToDone.setFinalDate(LocalDate.now());
+        todoRepository.save(taskToDone);
+        return "redirect:/";
     }
 
     private String updateStatusInIndex(Task task) {

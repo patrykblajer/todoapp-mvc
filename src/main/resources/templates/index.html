@@ -15,7 +15,9 @@
         <div style="text-align: center;"><img
                 src="https://cdn.pixabay.com/photo/2020/01/21/18/39/todo-4783676_960_720.png"
                 alt="Girl in a jacket" width="260" height="120"></div>
-        <form id="form" th:action="@{/save}" method="post" th:object="${newTask}">
+        <form id="form" th:action="@{/save}" method="post" onsubmit="alert('Zadanie zostało dodane.')" th:object="
+              ${newTask}
+        ">
             <div class="col-12">
                 <div class="form-outline">
                     <label class="form-label" for="form1">Wprowadź opis zadania:</label>
@@ -64,17 +66,25 @@
             <td><a th:text="${element.getDescription()}"></a></td>
             <td><a th:text="${element.getStartDate()}"></a></td>
             <td><a th:text="${element.getCategory().getCategoryInPlTranslation()}"></a></td>
-            <td><a th:text="${T(java.time.Period).between(T(java.time.LocalDate).now(), element.getStartDate()).getDays()}"></a></td>
+            <td>
+                <a th:text="${T(java.time.Period).between(T(java.time.LocalDate).now(), element.getStartDate()).getDays()}"></a>
+            </td>
             <td><a th:text="*{element.getStatus()}"></a></td>
             <td>
                 <form action="#" th:action="@{'/done/{id}'(id=${element.getId()})}" th:method="delete">
-                    <button type="submit" id="finishbtn" class="btn btn-success ms-1">Zakończ</button>
+                    <button type="submit" id="finishbtn"
+                            onclick="alert('Zadanie zostało zakończone, zmieniło status i trafiło do Archiwum.')"
+                            class="btn btn-success ms-1">Zakończ
+                    </button>
                 </form>
                 <form action="#" th:action="@{'/edit/{id}'(id=${element.getId()})}" th:method="edit">
                     <button type="submit" id="editbtn" class="btn btn-info">Edytuj(TODO)</button>
                 </form>
                 <form action="#" th:action="@{'/delete/{id}'(id=${element.getId()})}" th:method="delete">
-                    <button type="submit" id="deletebtn" class="btn btn-danger">Usuń</button>
+                    <button type="submit" id="deletebtn"
+                            onclick="alert('Zadanie usunięte.')"
+                            class="btn btn-danger">Usuń
+                    </button>
                 </form>
             </td>
         </tr>

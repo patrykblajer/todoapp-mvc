@@ -8,19 +8,19 @@ import java.time.LocalDate;
 @Component
 public class TodoComponent {
 
-    private final TodoRepo todoRepo;
+    private final TodoRepository todoRepository;
 
-    public TodoComponent(TodoRepo todoRepo) {
-        this.todoRepo = todoRepo;
+    public TodoComponent(TodoRepository todoRepository) {
+        this.todoRepository = todoRepository;
     }
 
     @PostConstruct
     public void addTestTasks() {
-        var testTask1 = new Task("Kupić karnet", Category.ENTERTAINMENT, LocalDate.now().plusDays(13));
-        var testTask2 = new Task("Przygotować śniadanie", Category.HOME, LocalDate.now());
-        var testTask3 = new Task("Zrobić notatki", Category.WORK, LocalDate.now().minusDays(5));
-        todoRepo.save(testTask1);
-        todoRepo.save(testTask2);
-        todoRepo.save(testTask3);
+        var testTask1 = new Task("Kupić karnet", Category.ENTERTAINMENT, LocalDate.now().plusDays(13), false);
+        var testTask2 = new Task("Przygotować śniadanie", Category.HOME, LocalDate.now(), false);
+        var testTask3 = new Task("Zrobić notatki", Category.WORK, LocalDate.now().minusDays(5), false);
+        todoRepository.save(testTask1);
+        todoRepository.save(testTask2);
+        todoRepository.save(testTask3);
     }
 }
