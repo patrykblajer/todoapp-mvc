@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="pb" id="002-1">
+        <insert tableName="user">
+            <column name="id" value="1"/>
+            <column name="first_name" value="John"/>
+            <column name="last_name" value="Doe"/>
+            <column name="email" value="john@localhost.com"/>
+            <column name="password" value="$2a$12$mYaTOHU1jYbjF.KUzW3CXuxAXGVHR1vMJWZy1/DlGbZRe/c/IQSBC"/>
+            <column name="registration_date" value="2021-09-23"/>
+            <column name="banned" value="false"/>
+        </insert>
+        <insert tableName="user">
+            <column name="id" value="2"/>
+            <column name="first_name" value="Jan"/>
+            <column name="last_name" value="Kowalski"/>
+            <column name="email" value="kowal@localhost.com"/>
+            <column name="password" value="$2a$12$mYaTOHU1jYbjF.KUzW3CXuxAXGVHR1vMJWZy1/DlGbZRe/c/IQSBC"/>
+            <column name="registration_date" value="2021-09-25"/>
+            <column name="banned" value="false"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="pb" id="002-2">
+        <insert tableName="user_role">
+            <column name="role" value="ROLE_ADMIN"/>
+            <column name="user_id" value="1"/>
+        </insert>
+        <insert tableName="user_role">
+            <column name="role" value="ROLE_USER"/>
+            <column name="user_id" value="2"/>
+        </insert>
+    </changeSet>
+
+
+    <changeSet author="pb" id="002-3">
+        <insert tableName="task">
+            <column name="user_id" value="1"/>
+            <column name="description" value="Kupić karnet"/>
+            <column name="category" value="ENTERTAINMENT"/>
+            <column name="start_date" value="2021-09-30"/>
+            <column name="done" value="false"/>
+        </insert>
+        <insert tableName="task">
+            <column name="user_id" value="1"/>
+            <column name="description" value="Przygotować śniadanie"/>
+            <column name="category" value="HOME"/>
+            <column name="start_date" value="2021-10-01"/>
+            <column name="done" value="false"/>
+        </insert>
+        <insert tableName="task">
+            <column name="user_id" value="1"/>
+            <column name="description" value="Zrobić notatki"/>
+            <column name="category" value="WORK"/>
+            <column name="start_date" value="2021-10-15"/>
+            <column name="done" value="false"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

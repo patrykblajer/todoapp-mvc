@@ -1,5 +1,7 @@
-package io.github.patrykblajer.todo;
+package io.github.patrykblajer.todo.task;
 
+import io.github.patrykblajer.todo.category.Category;
+import io.github.patrykblajer.todo.user.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -10,11 +12,16 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     private String description;
     @Enumerated(EnumType.STRING)
     private Category category;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "start_date")
     private LocalDate startDate;
+    @Column(name = "final_date")
     private LocalDate finalDate;
     @Transient
     private String status;
@@ -23,11 +30,12 @@ public class Task {
     public Task() {
     }
 
-    public Task(String description, Category category, LocalDate startDate, boolean done) {
+    public Task(Long id, User user, String description, Category category, LocalDate startDate) {
+        this.id = id;
+        this.user = user;
         this.description = description;
         this.category = category;
         this.startDate = startDate;
-        this.done = done;
     }
 
     public Long getId() {
@@ -36,6 +44,14 @@ public class Task {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getDescription() {

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="pb" id="001-1">
+
+        <createTable tableName="user">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="varchar(255)">
+            </column>
+            <column name="last_name" type="varchar(255)">
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints unique="true"/>
+            </column>
+            <column name="password" type="varchar(255)">
+            </column>
+            <column name="registration_date" type="date">
+            </column>
+            <column name="banned" type="boolean">
+            </column>
+        </createTable>
+
+        <createTable tableName="task">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="true" foreignKeyName="fk_user_id__task"
+                             referencedTableName="user"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="description" type="varchar(255)">
+            </column>
+            <column name="category" type="varchar(255)">
+            </column>
+            <column name="start_date" type="date">
+            </column>
+            <column name="final_date" type="date">
+            </column>
+            <column name="done" type="boolean">
+            </column>
+        </createTable>
+
+        <createTable tableName="user_role">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="role" type="varchar(255)">
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="true" foreignKeyName="fk_user_id__user_role"
+                             referencedTableName="user"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
