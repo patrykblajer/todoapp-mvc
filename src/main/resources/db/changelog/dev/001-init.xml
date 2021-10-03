@@ -54,6 +54,7 @@
             </column>
             <column name="user_id" type="bigint">
                 <constraints nullable="true" foreignKeyName="fk_user_id__user_role"
+                             unique="true"
                              referencedTableName="user"
                              referencedColumnNames="id"/>
             </column>

@@ -1,6 +1,6 @@
 package io.github.patrykblajer.todo.task;
 
-import io.github.patrykblajer.todo.authorization.AuthService;
+import io.github.patrykblajer.todo.user.authorization.AuthService;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 

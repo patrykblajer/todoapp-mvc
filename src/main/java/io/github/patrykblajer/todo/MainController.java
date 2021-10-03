@@ -1,6 +1,6 @@
 package io.github.patrykblajer.todo;
 
-import io.github.patrykblajer.todo.authorization.AuthService;
+import io.github.patrykblajer.todo.user.authorization.AuthService;
 import io.github.patrykblajer.todo.task.TaskDto;
 import io.github.patrykblajer.todo.task.TaskService;
 import org.springframework.stereotype.Controller;
@@ -44,7 +44,7 @@ public class MainController {
     }
 
     @Transactional
-    @PostMapping(value = "/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteTask(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         taskService.deleteTask(id);
         redirectAttributes.addFlashAttribute("deleteTaskSuccess", "deleteTaskSuccess");
@@ -52,7 +52,7 @@ public class MainController {
     }
 
     @Transactional
-    @PostMapping(value = "/done/{id}")
+    @PostMapping("/done/{id}")
     public String setTaskDone(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         taskService.setTaskDone(id);
         redirectAttributes.addFlashAttribute("doneTaskSuccess", "doneTaskSuccess");

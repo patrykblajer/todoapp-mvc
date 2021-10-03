@@ -1,4 +1,4 @@
-package io.github.patrykblajer.todo.security;
+package io.github.patrykblajer.todo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

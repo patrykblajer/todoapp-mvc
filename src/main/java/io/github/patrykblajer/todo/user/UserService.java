@@ -1,6 +1,6 @@
 package io.github.patrykblajer.todo.user;
 
-import io.github.patrykblajer.todo.authorization.AuthService;
+import io.github.patrykblajer.todo.user.authorization.AuthService;
 import io.github.patrykblajer.todo.user.role.Role;
 import io.github.patrykblajer.todo.user.role.UserRole;
 import io.github.patrykblajer.todo.user.role.UserRoleService;
@@ -94,5 +94,11 @@ public class UserService {
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setPassword(authService.encodePassword(userDto.getPassword()));
+    }
+
+    public void editUserMailPass(UserPanelDto userPanelDto) {
+        var user = userRepository.getById(userPanelDto.getId());
+        user.setEmail(userPanelDto.getEmail());
+        user.setPassword(authService.encodePassword(userPanelDto.getPassword()));
     }
 }

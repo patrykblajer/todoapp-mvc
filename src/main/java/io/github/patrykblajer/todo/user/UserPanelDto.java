@@ -1,4 +1,4 @@
-package io.github.patrykblajer.todo.userpanel;
+package io.github.patrykblajer.todo.user;
 
 public class UserPanelDto {
     private Long id;

@@ -1,6 +1,6 @@
 package io.github.patrykblajer.todo.task;
 
-import io.github.patrykblajer.todo.category.Category;
+import io.github.patrykblajer.todo.task.category.Category;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
