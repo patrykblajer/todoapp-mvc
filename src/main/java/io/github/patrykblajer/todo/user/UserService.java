@@ -7,6 +7,7 @@ import io.github.patrykblajer.todo.user.role.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
@@ -96,6 +97,7 @@ public class UserService {
         user.setPassword(authService.encodePassword(userDto.getPassword()));
     }
 
+    @Transactional
     public void editUserMailPass(UserPanelDto userPanelDto) {
         var user = userRepository.getById(userPanelDto.getId());
         user.setEmail(userPanelDto.getEmail());

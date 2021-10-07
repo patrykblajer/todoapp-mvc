@@ -3,12 +3,14 @@ package io.github.patrykblajer.todo.task;
 import io.github.patrykblajer.todo.task.category.Category;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 public class TaskDto {
 
     private Long id;
     private Long userId;
+    @NotBlank
     private String description;
     private Category category;
     private LocalDate startDate;

@@ -23,6 +23,7 @@ public class AuthService {
         this.userService = userService;
     }
 
+
     public UserDto getLoggedUserDto() {
         var userMail = SecurityContextHolder.getContext().getAuthentication().getName();
         return userService.findUserDtoByEmail(userMail);

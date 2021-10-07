@@ -30,7 +30,7 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="user_id" type="bigint">
-                <constraints nullable="true" foreignKeyName="fk_user_id__task"
+                <constraints nullable="false" foreignKeyName="fk_user_id__task"
                              referencedTableName="user"
                              referencedColumnNames="id"/>
             </column>

@@ -17,6 +17,8 @@
      th:if="${doneTaskSuccess}"></div>
 <div class="alert alert-success" role="alert" th:id="successalert" th:text="#{|${deleteTaskSuccess}|}"
      th:if="${deleteTaskSuccess}"></div>
+<div class="alert alert-danger" role="alert" th:id="dangeralert" th:text="#{|${badDescriptionAlert}|}"
+     th:if="${badDescriptionAlert}"></div>
 <div><img src="/img/logotype.png" alt="logotype" id="logotype"></div>
 <section id="main-user-panel">
     <div class="container mt-5 d-flex justify-content-center">
@@ -50,11 +52,11 @@
 </section>
 <section>
     <div>
-        <form id="main-form" th:action="@{/save}" method="post" th:object="${newTask}">
+        <form id="main-form" th:action="@{/}" method="post" th:object="${newTask}" novalidate>
             <div class="col-12">
                 <div class="form-outline">
                     <label class="form-label" for="form1">Wprowadź opis zadania:</label>
-                    <input type="text" id="form1" th:required="required" th:field="*{description}"
+                    <input type="text" id="form1" th:field="*{description}"
                            class="form-control"/>
                 </div>
                 <div class="form-outline">

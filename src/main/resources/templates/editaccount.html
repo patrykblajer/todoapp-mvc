@@ -16,14 +16,17 @@
             <div class="col-12">
                 <div class="form-outline">
                     <label class="form-label" for="form3">Adres e-mail:</label>
-                    <input type="email" id="form3" th:field="*{email}" name="email"
+                    <input type="text" id="form3" th:field="*{email}" name="email"
                            class="form-control"/>
                     <small id="email-info" class="form-text text-muted">Adres e-mail jest jednocześnie loginem.</small>
+                    <div id="wrong-text-form" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    <div id="wrong-text-form" th:text="#{|${emailExistAlert}|}" th:if="${emailExistAlert}"></div>
                 </div>
                 <div class="form-outline">
                     <label class="form-label" for="form4">Hasło:</label>
-                    <input type="password" id="form4" th:field="*{password}" name="password" th:required="required"
+                    <input type="password" id="form4" th:field="*{password}" name="password"
                            class="form-control"/>
+                    <div id="wrong-text-form" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                 </div>
             </div>
             <div class="text-center" th:id="edit-account-buttons">

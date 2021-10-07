@@ -5,10 +5,13 @@ import io.github.patrykblajer.todo.task.TaskDto;
 import io.github.patrykblajer.todo.task.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
+
 
 @Controller
 public class MainController {
@@ -20,7 +23,7 @@ public class MainController {
         this.authService = authService;
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public String index(Model model) {
         model.addAttribute("newTask", taskService.newTask(authService.getLoggedUserDto().getId()));
         model.addAttribute("notDoneList", taskService.getSortedTasksDto());
@@ -30,10 +33,17 @@ public class MainController {
     }
 
     @Transactional
-    @PostMapping("/save")
-    public String add(TaskDto taskDto, RedirectAttributes redirectAttributes) {
-        taskService.save(taskDto);
-        redirectAttributes.addFlashAttribute("addTaskSuccess", "addTaskSuccess");
+    @PostMapping()
+    public String add(@Valid TaskDto taskDto, BindingResult bindingResult,
+                      RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("badDescriptionAlert", "badDescriptionAlert");
+            return "redirect:/";
+        } else {
+            taskService.save(taskDto);
+            redirectAttributes.addFlashAttribute("addTaskSuccess", "addTaskSuccess");
+        }
         return "redirect:/";
     }
 

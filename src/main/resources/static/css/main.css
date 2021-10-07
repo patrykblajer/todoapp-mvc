@@ -98,3 +98,8 @@ body {
     text-align: center;
     font-weight: 520;
 }
+
+#wrong-text-form {
+    font-size: 12px;
+    color: #ff0000;
+}

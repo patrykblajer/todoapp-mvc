@@ -10,7 +10,6 @@
     <title>TODO - rejestracja</title>
 </head>
 <body>
-<div class="alert alert-danger" role="alert" th:text="#{|${registerErrorAlert}|}" th:if="${registerErrorAlert}"></div>
 <section th:id="login-panel">
     <div>
         <div><img src="/img/logotype.png" alt="logotype" id="logotype"></div>
@@ -19,24 +18,29 @@
             <div class="col-12">
                 <div class="form-outline">
                     <label class="form-label" for="form1">Imię:</label>
-                    <input type="text" id="form1" th:field="*{firstName}" name="first_name" th:required="required"
+                    <input type="text" id="form1" th:field="*{firstName}" name="first_name"
                            class="form-control"/>
+                    <div id="wrong-text-form" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
                 </div>
                 <div class="form-outline">
                     <label class="form-label" for="form2">Nazwisko:</label>
-                    <input type="text" id="form2" th:field="*{lastName}" name="last_name" th:required="required"
+                    <input type="text" id="form2" th:field="*{lastName}" name="last_name"
                            class="form-control"/>
+                    <div id="wrong-text-form" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
                 </div>
                 <div class="form-outline">
                     <label class="form-label" for="form3">Adres e-mail:</label>
-                    <input type="email" id="form3" th:field="*{email}" name="email" th:required="required"
+                    <input type="text" id="form3" th:field="*{email}" name="email"
                            class="form-control"/>
                     <small id="email-info" class="form-text text-muted">Adres e-mail jest jednocześnie loginem.</small>
+                    <div id="wrong-text-form" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    <div id="wrong-text-form" th:text="#{|${emailExistAlert}|}" th:if="${emailExistAlert}"></div>
                 </div>
                 <div class="form-outline">
                     <label class="form-label" for="form4">Hasło:</label>
-                    <input type="password" id="form4" th:field="*{password}" name="password" th:required="required"
+                    <input type="password" id="form4" th:field="*{password}" name="password"
                            class="form-control"/>
+                    <div id="wrong-text-form" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                 </div>
             </div>
             <div class="text-center">

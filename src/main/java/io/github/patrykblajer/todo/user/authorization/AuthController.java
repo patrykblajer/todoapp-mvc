@@ -6,10 +6,10 @@ import io.github.patrykblajer.todo.user.UserService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 @Controller
 public class AuthController {
@@ -38,17 +38,21 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute UserDto userDto, RedirectAttributes redirectAttributes, Model model) {
+    public String register(@Valid @ModelAttribute(name = "newUserDto") UserDto userDto, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("newUserDto", userDto);
+            return "register";
+        }
         try {
             userService.saveWithDefaultRole(userDto);
             model.addAttribute("registerSuccessAlert", "registerSuccessAlert");
             return "login";
         } catch (DataIntegrityViolationException e) {
-            redirectAttributes.addFlashAttribute("registerErrorAlert", "registerErrorAlert");
-            return "redirect:/register";
+            model.addAttribute("emailExistAlert", "emailExistAlert");
+            return "register";
         }
     }
-
 
     @GetMapping("/editaccount")
     public String editAccount(Model model) {
@@ -58,10 +62,18 @@ public class AuthController {
         return "editaccount";
     }
 
-    @Transactional
     @PostMapping("/editaccount")
-    public String editAccountSuccess(UserPanelDto userPanelDto) {
-        userService.editUserMailPass(userPanelDto);
+    public String editAccountSuccess(@Valid @ModelAttribute(name = "userPanelDto") UserPanelDto userPanelDto, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("userPanelDto", userPanelDto);
+            return "editaccount";
+        }
+        try {
+            userService.editUserMailPass(userPanelDto);
+        } catch (DataIntegrityViolationException e) {
+            model.addAttribute("emailExistAlert", "emailExistAlert");
+            return "editaccount";
+        }
         return "redirect:/logout";
     }
 }
