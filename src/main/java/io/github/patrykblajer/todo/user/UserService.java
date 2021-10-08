@@ -4,7 +4,7 @@ import io.github.patrykblajer.todo.user.authorization.AuthService;
 import io.github.patrykblajer.todo.user.role.Role;
 import io.github.patrykblajer.todo.user.role.UserRole;
 import io.github.patrykblajer.todo.user.role.UserRoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,18 +18,16 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     private final UserRoleService userRoleService;
     private final AuthService authService;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserRoleService userRoleService, AuthService authService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-    }
-
-    public UserService(UserRoleService userRoleService, AuthService authService) {
         this.userRoleService = userRoleService;
         this.authService = authService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void saveWithDefaultRole(UserDto userDto) {
@@ -94,13 +92,13 @@ public class UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
-        user.setPassword(authService.encodePassword(userDto.getPassword()));
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
     }
 
     @Transactional
     public void editUserMailPass(UserPanelDto userPanelDto) {
         var user = userRepository.getById(userPanelDto.getId());
         user.setEmail(userPanelDto.getEmail());
-        user.setPassword(authService.encodePassword(userPanelDto.getPassword()));
+        user.setPassword(passwordEncoder.encode(userPanelDto.getPassword()));
     }
 }

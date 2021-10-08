@@ -1,7 +1,5 @@
 package io.github.patrykblajer.todo.task;
 
-import io.github.patrykblajer.todo.task.category.Category;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

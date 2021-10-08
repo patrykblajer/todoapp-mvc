@@ -69,7 +69,7 @@
                 <div class="form-outline">
                     <label class="form-label" for="form3">Kategoria:</label>
                     <select class="form-control" id="form3" th:field="*{category}" name="cat">
-                        <option th:each="category:${T(io.github.patrykblajer.todo.task.category.Category).values()}"
+                        <option th:each="category:${T(io.github.patrykblajer.todo.task.Category).values()}"
                                 th:text="#{${category}}"
                                 th:value="${category}">
                         </option>
