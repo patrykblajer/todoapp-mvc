@@ -1,4 +1,4 @@
-package io.github.patrykblajer.todo.task.category;
+package io.github.patrykblajer.todo.task;
 
 public enum Category {
     HOME,
