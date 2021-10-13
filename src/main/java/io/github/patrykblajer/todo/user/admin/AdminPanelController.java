@@ -31,21 +31,21 @@ public class AdminPanelController {
     }
 
     @Transactional
-    @GetMapping("/changestatus/{id}")
+    @PostMapping("/changestatus/{id}")
     public String changeStatus(@PathVariable Long id, @RequestParam boolean banned) {
         userService.changeUserStatus(id, banned);
         return "redirect:/admin";
     }
 
     @Transactional
-    @GetMapping("/changerole/{id}")
+    @PostMapping("/changerole/{id}")
     public String changeRole(@PathVariable Long id, @RequestParam Role role) {
         userService.changeUserRole(id, role);
         return "redirect:/admin";
     }
 
     @Transactional
-    @GetMapping("/editaccount/{id}")
+    @PostMapping("/editaccount/{id}")
     public String editAccountById(@PathVariable Long id, Model model) {
         var userToEdit = userService.findUserDtoById(id);
         model.addAttribute("userToEdit", userToEdit);
@@ -53,7 +53,7 @@ public class AdminPanelController {
     }
 
     @Transactional
-    @GetMapping("/editaccount/success")
+    @PostMapping("/editaccount/success")
     public String editAccountSuccess(UserDto userDto) {
         userService.editUser(userDto);
         return "redirect:/admin";

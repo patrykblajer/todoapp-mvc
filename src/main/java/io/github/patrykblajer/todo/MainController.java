@@ -1,30 +1,37 @@
 package io.github.patrykblajer.todo;
 
+import io.github.patrykblajer.todo.user.UserService;
 import io.github.patrykblajer.todo.user.authorization.AuthService;
 import io.github.patrykblajer.todo.task.TaskDto;
 import io.github.patrykblajer.todo.task.TaskService;
+import io.github.patrykblajer.todo.weatherwidget.WeatherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-
 @Controller
 public class MainController {
     private final TaskService taskService;
     private final AuthService authService;
+    private final WeatherService weatherService;
+    private final UserService userService;
 
-    public MainController(TaskService taskService, AuthService authService) {
-        this.taskService = taskService;
-        this.authService = authService;
-    }
-
-    @GetMapping()
+    @GetMapping
     public String index(Model model) {
+        try {
+            weatherService.getWeatherForCity(authService.getLoggedUser().getCity());
+            model.addAttribute("weather", weatherService.getWeatherForCity(authService.getLoggedUser().getCity()));
+            model.addAttribute("weatherWidget", true);
+        } catch (HttpClientErrorException e) {
+            model.addAttribute("weatherWidget", false);
+            userService.setUserDefaultCity();
+        }
         model.addAttribute("newTask", taskService.newTask(authService.getLoggedUserDto().getId()));
         model.addAttribute("notDoneList", taskService.getSortedTasksDto());
         model.addAttribute("doneList", taskService.getDoneTasksDto());
@@ -32,8 +39,15 @@ public class MainController {
         return "index";
     }
 
+    public MainController(TaskService taskService, AuthService authService, WeatherService weatherService, UserService userService) {
+        this.taskService = taskService;
+        this.authService = authService;
+        this.weatherService = weatherService;
+        this.userService = userService;
+    }
+
     @Transactional
-    @PostMapping()
+    @PostMapping
     public String add(@Valid TaskDto taskDto, BindingResult bindingResult,
                       RedirectAttributes redirectAttributes) {
 

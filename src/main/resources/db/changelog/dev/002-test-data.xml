@@ -12,6 +12,7 @@
             <column name="last_name" value="Doe"/>
             <column name="email" value="john@localhost.com"/>
             <column name="password" value="$2a$12$mYaTOHU1jYbjF.KUzW3CXuxAXGVHR1vMJWZy1/DlGbZRe/c/IQSBC"/>
+            <column name="city" value="Berlin"/>
             <column name="registration_date" value="2021-09-23"/>
             <column name="banned" value="false"/>
         </insert>
@@ -21,6 +22,7 @@
             <column name="last_name" value="Kowalski"/>
             <column name="email" value="kowal@localhost.com"/>
             <column name="password" value="$2a$12$mYaTOHU1jYbjF.KUzW3CXuxAXGVHR1vMJWZy1/DlGbZRe/c/IQSBC"/>
+            <column name="city" value="Warszawa"/>
             <column name="registration_date" value="2021-09-25"/>
             <column name="banned" value="false"/>
         </insert>
@@ -43,21 +45,21 @@
             <column name="user_id" value="1"/>
             <column name="description" value="Kupić karnet"/>
             <column name="category" value="ENTERTAINMENT"/>
-            <column name="start_date" value="2021-09-30"/>
+            <column name="start_date" value="2021-10-30"/>
             <column name="done" value="false"/>
         </insert>
         <insert tableName="task">
             <column name="user_id" value="1"/>
             <column name="description" value="Przygotować śniadanie"/>
             <column name="category" value="HOME"/>
-            <column name="start_date" value="2021-10-01"/>
+            <column name="start_date" value="2021-10-05"/>
             <column name="done" value="false"/>
         </insert>
         <insert tableName="task">
             <column name="user_id" value="1"/>
             <column name="description" value="Zrobić notatki"/>
             <column name="category" value="WORK"/>
-            <column name="start_date" value="2021-10-15"/>
+            <column name="start_date" value="2021-10-14"/>
             <column name="done" value="false"/>
         </insert>
     </changeSet>

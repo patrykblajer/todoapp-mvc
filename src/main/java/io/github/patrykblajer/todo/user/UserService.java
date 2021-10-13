@@ -32,7 +32,7 @@ public class UserService {
 
     public void saveWithDefaultRole(UserDto userDto) {
         var newUser = new User(userDto.getId(), userDto.getFirstName(), userDto.getLastName(), userDto.getEmail(),
-                userDto.getPassword(), LocalDate.now(), false);
+                userDto.getPassword(), userDto.getCity(), LocalDate.now(), false);
         String passwordHash = authService.encodePassword(newUser.getPassword());
         newUser.setPassword(passwordHash);
         List<UserRole> list = Collections.singletonList(new UserRole(newUser, Role.ROLE_USER));
@@ -46,14 +46,14 @@ public class UserService {
 
     public UserDto findUserDtoById(Long userId) {
         return userRepository.findById(userId)
-                .map(user -> new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword()))
+                .map(user -> new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getCity()))
                 .orElseThrow();
     }
 
     public UserDto findUserDtoByEmail(String userMail) {
         return userRepository.findUserByEmail(userMail)
                 .map(user -> new UserDto(user.getId(), user.getFirstName(), user.getLastName(),
-                        user.getEmail(), user.getPassword(), user.getRegistrationDate(), user.isBanned(),
+                        user.getEmail(), user.getPassword(), user.getCity(), user.getRegistrationDate(), user.isBanned(),
                         userRoleService.getUserRoleByUserId(user.getId())))
                 .orElseThrow();
     }
@@ -64,7 +64,7 @@ public class UserService {
 
     public List<UserDto> getUserDtoList() {
         var users = userRepository.findAll().stream()
-                .map(user -> new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
+                .map(user -> new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getCity(),
                         user.getRegistrationDate(), user.isBanned()))
                 .collect(Collectors.toList());
 
@@ -99,6 +99,12 @@ public class UserService {
     public void editUserMailPass(UserPanelDto userPanelDto) {
         var user = userRepository.getById(userPanelDto.getId());
         user.setEmail(userPanelDto.getEmail());
+        user.setCity(userPanelDto.getCity());
         user.setPassword(passwordEncoder.encode(userPanelDto.getPassword()));
+    }
+
+    @Transactional
+    public void setUserDefaultCity() {
+        authService.getLoggedUser().setCity("");
     }
 }

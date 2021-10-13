@@ -20,6 +20,15 @@
 <div class="alert alert-danger" role="alert" th:id="dangeralert" th:text="#{|${badDescriptionAlert}|}"
      th:if="${badDescriptionAlert}"></div>
 <div><img src="/img/logotype.png" alt="logotype" id="logotype"></div>
+<div th:id="weather-widget" th:if="${weatherWidget == true && !loggedUser.city.isEmpty()}"
+     class="card text-dark bg-light">
+    <div class="card-body">
+        <h5 class="card-title" th:text="*{weather.name}"></h5>
+        <p th:id="weather-widget-text-description" th:text="*{weather.description}" class="card-text"></p>
+        <p th:id="weather-widget-text-temperature" th:text="*{weather.temperature + '°C'}" class="card-text">°C</p>
+    </div>
+</div>
+<div th:id="weather-widget-error" th:text="#{|cityNotFound|}" th:if="${weatherWidget == false}"></div>
 <section id="main-user-panel">
     <div class="container mt-5 d-flex justify-content-center">
         <div class="card p-3">
@@ -46,6 +55,7 @@
                         </a>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

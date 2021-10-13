@@ -33,6 +33,30 @@ body {
     overflow: hidden;
 }
 
+#weather-widget {
+    width: 350px;
+    margin: 50px 435px -55px auto;
+
+}
+
+#weather-widget-error{
+    width: 350px;
+    font-size: 10px;
+    margin: 50px 435px -55px auto;
+}
+
+#weather-widget-text-description {
+    line-height: 0.1;
+    display: inline;
+}
+
+#weather-widget-text-temperature {
+    margin-left: 225px;
+    font-weight: 450;
+    margin-top: -50px;
+    font-size: 30px;
+}
+
 #main-user-panel {
     margin-top: 20px;
     margin-right: 400px;
@@ -88,7 +112,7 @@ body {
     width: 30%;
 }
 
-#edit-account-buttons{
+#edit-account-buttons {
     margin-top: 15px;
 }
 

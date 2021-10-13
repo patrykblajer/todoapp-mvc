@@ -26,24 +26,27 @@ public class UserDto {
     private String email;
     @Pattern(regexp = "^(?=.{8,30})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$", message = "{passwordInvalid}")
     private String password;
+    private String city;
     private LocalDate registrationDate;
     private boolean banned;
     private Role role;
 
-    public UserDto(Long id, String firstName, String lastName, String email, LocalDate registrationDate, boolean banned) {
+    public UserDto(Long id, String firstName, String lastName, String email, String city, LocalDate registrationDate, boolean banned) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.city = city;
         this.registrationDate = registrationDate;
         this.banned = banned;
     }
 
-    public UserDto(Long id, String firstName, String lastName, String email, String password) {
+    public UserDto(Long id, String firstName, String lastName, String email, String password, String city) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.city = city;
     }
 }

@@ -28,6 +28,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    private String city;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JoinColumn(name = "registration_date")
     private LocalDate registrationDate;
@@ -37,12 +38,13 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Set<UserRole> roles = new HashSet<>();
 
-    public User(Long id, String firstName, String lastName, String email, String password, LocalDate registrationDate, boolean banned) {
+    public User(Long id, String firstName, String lastName, String email, String password, String city, LocalDate registrationDate, boolean banned) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.city = city;
         this.registrationDate = registrationDate;
         this.banned = banned;
     }

@@ -23,6 +23,12 @@
                     <div id="wrong-text-form" th:text="#{|${emailExistAlert}|}" th:if="${emailExistAlert}"></div>
                 </div>
                 <div class="form-outline">
+                    <label class="form-label" for="form3">Miasto:</label>
+                    <input type="text" id="form3" th:field="*{city}" name="city"
+                           class="form-control"/>
+                    <small id="email-info" class="form-text text-muted">Dostarczymy wiadomości pogodowe, pole nie jest wymagane.</small>
+                </div>
+                <div class="form-outline">
                     <label class="form-label" for="form4">Hasło:</label>
                     <input type="password" id="form4" th:field="*{password}" name="password"
                            class="form-control"/>

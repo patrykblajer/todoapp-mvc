@@ -32,39 +32,40 @@
             <td><a th:text="${user.getLastName()}"></a></td>
             <td><a th:text="${user.getEmail()}"></a>
                 <br>
-                <a th:href="@{'/admin/editaccount/{id}'(id=${user.getId()})}">
-                    <button type="button" th:id="admin-action-btn" class="btn btn-primary btn-sm">Edytuj dane konta
+                <form method="post" th:action="@{'/admin/editaccount/{id}'(id=${user.getId()})}">
+                    <button type="submit" th:id="admin-action-btn" name="submit" class="btn btn-primary btn-sm">Edytuj
+                        dane konta
                     </button>
-                </a>
+                </form>
             </td>
             <td><a th:text="${user.getRegistrationDate()}"></a></td>
             <td>
                 <a th:text="#{${user.isBanned()}}"></a>
                 <br>
-                <a th:if="${user.isBanned() && user.id != loggedUserId}"
-                   th:href="@{'/admin/changestatus/{id}?banned=false'(id=${user.getId()})}">
-                    <button type="button" th:id="admin-action-btn" class="btn btn-success btn-sm">Aktywuj
+                <form method="post" th:if="${user.isBanned() && user.id != loggedUserId}"
+                      th:action="@{'/admin/changestatus/{id}?banned=false'(id=${user.getId()})}">
+                    <button type="submit" th:id="admin-action-btn" class="btn btn-success btn-sm">Aktywuj
                     </button>
-                </a>
-                <a th:if="${!user.isBanned() && user.id != loggedUserId}"
-                   th:href="@{'/admin/changestatus/{id}?banned=true'(id=${user.getId()})}">
-                    <button type="button" th:id="admin-action-btn" class="btn btn-danger btn-sm">Zbanuj
+                </form>
+                <form method="post" th:if="${!user.isBanned() && user.id != loggedUserId}"
+                      th:action="@{'/admin/changestatus/{id}?banned=true'(id=${user.getId()})}">
+                    <button type="submit" th:id="admin-action-btn" class="btn btn-danger btn-sm">Zbanuj
                     </button>
-                </a>
+                </form>
             </td>
             <td>
                 <a th:text="#{${user.getRole()}}"></a>
                 <br>
-                <a th:if="${user.getRole().name() == 'ROLE_ADMIN' && user.id != loggedUserId}"
-                   th:href="@{'/admin/changerole/{id}?role=ROLE_USER'(id=${user.getId()})}">
-                    <button type="button" th:id="admin-action-btn" class="btn btn-danger btn-sm">Zabierz admina
+                <form method="post" th:if="${user.getRole().name() == 'ROLE_ADMIN' && user.id != loggedUserId}"
+                      th:action="@{'/admin/changerole/{id}?role=ROLE_USER'(id=${user.getId()})}">
+                    <button type="submit" th:id="admin-action-btn" class="btn btn-danger btn-sm">Zabierz admina
                     </button>
-                </a>
-                <a th:if="${user.getRole().name() != 'ROLE_ADMIN' && user.id != loggedUserId}"
-                   th:href="@{'/admin/changerole/{id}?role=ROLE_ADMIN'(id=${user.getId()})}">
-                    <button type="button" th:id="admin-action-btn" class="btn btn-success btn-sm">Przyznaj admina
+                </form>
+                <form method="post" th:if="${user.getRole().name() != 'ROLE_ADMIN' && user.id != loggedUserId}"
+                      th:action="@{'/admin/changerole/{id}?role=ROLE_ADMIN'(id=${user.getId()})}">
+                    <button type="submit" th:id="admin-action-btn" class="btn btn-success btn-sm">Przyznaj admina
                     </button>
-                </a>
+                </form>
             </td>
         </tr>
         </tbody>
