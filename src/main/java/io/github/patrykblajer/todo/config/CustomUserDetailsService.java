@@ -1,5 +1,6 @@
 package io.github.patrykblajer.todo.config;
 
+import io.github.patrykblajer.todo.user.User;
 import io.github.patrykblajer.todo.user.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         var user = userRepository.findUserByEmail(email)
+                .filter(usr -> !usr.isBanned())
                 .orElseThrow(() -> new UsernameNotFoundException("USER_NOT_FOUND_OR_IS_BANNED"));
 
         Set<SimpleGrantedAuthority> roles = user.getRoles().stream()

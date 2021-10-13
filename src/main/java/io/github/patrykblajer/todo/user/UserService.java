@@ -31,8 +31,16 @@ public class UserService {
     }
 
     public void saveWithDefaultRole(UserDto userDto) {
-        var newUser = new User(userDto.getId(), userDto.getFirstName(), userDto.getLastName(), userDto.getEmail(),
-                userDto.getPassword(), userDto.getCity(), LocalDate.now(), false);
+        var newUser = User.builder()
+                .id(userDto.getId())
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .email(userDto.getEmail())
+                .password(userDto.getPassword())
+                .city(userDto.getCity())
+                .registrationDate(LocalDate.now())
+                .banned(false)
+                .build();
         String passwordHash = authService.encodePassword(newUser.getPassword());
         newUser.setPassword(passwordHash);
         List<UserRole> list = Collections.singletonList(new UserRole(newUser, Role.ROLE_USER));
@@ -46,15 +54,30 @@ public class UserService {
 
     public UserDto findUserDtoById(Long userId) {
         return userRepository.findById(userId)
-                .map(user -> new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getCity()))
+                .map(user -> UserDto.builder()
+                        .id(user.getId())
+                        .firstName(user.getFirstName())
+                        .lastName(user.getLastName())
+                        .email(user.getEmail())
+                        .password(user.getPassword())
+                        .city(user.getCity())
+                        .build())
                 .orElseThrow();
     }
 
     public UserDto findUserDtoByEmail(String userMail) {
         return userRepository.findUserByEmail(userMail)
-                .map(user -> new UserDto(user.getId(), user.getFirstName(), user.getLastName(),
-                        user.getEmail(), user.getPassword(), user.getCity(), user.getRegistrationDate(), user.isBanned(),
-                        userRoleService.getUserRoleByUserId(user.getId())))
+                .map(user -> UserDto.builder()
+                        .id(user.getId())
+                        .firstName(user.getFirstName())
+                        .lastName(user.getLastName())
+                        .email(user.getEmail())
+                        .password(user.getPassword())
+                        .city(user.getCity())
+                        .registrationDate(user.getRegistrationDate())
+                        .banned(user.isBanned())
+                        .role(userRoleService.getUserRoleByUserId(user.getId()))
+                        .build())
                 .orElseThrow();
     }
 
@@ -64,10 +87,15 @@ public class UserService {
 
     public List<UserDto> getUserDtoList() {
         var users = userRepository.findAll().stream()
-                .map(user -> new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getCity(),
-                        user.getRegistrationDate(), user.isBanned()))
+                .map(user -> UserDto.builder()
+                        .id(user.getId())
+                        .firstName(user.getFirstName())
+                        .lastName(user.getLastName())
+                        .email(user.getEmail())
+                        .registrationDate(user.getRegistrationDate())
+                        .banned(user.isBanned())
+                        .build())
                 .collect(Collectors.toList());
-
         for (UserDto user : users) {
             user.setRole(userRoleService.getUserRoleByUserId(user.getId()));
         }
@@ -101,10 +129,5 @@ public class UserService {
         user.setEmail(userPanelDto.getEmail());
         user.setCity(userPanelDto.getCity());
         user.setPassword(passwordEncoder.encode(userPanelDto.getPassword()));
-    }
-
-    @Transactional
-    public void setUserDefaultCity() {
-        authService.getLoggedUser().setCity("");
     }
 }

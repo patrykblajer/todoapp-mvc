@@ -22,28 +22,46 @@ public class TaskService {
 
     public List<TaskDto> getSortedTasksDto() {
         Sort byStartDateAsc = Sort.by(Sort.Direction.ASC, "startDate");
-
         return taskRepository.getSortedTasks(false, authService.getLoggedUser().getId(), byStartDateAsc).stream()
-                .map(task -> new TaskDto(task.getId(), task.getDescription(), task.getCategory(),
-                        task.getStartDate(), updateStatusInIndex(task)))
+                .map(task -> TaskDto.builder()
+                        .id(task.getId())
+                        .description(task.getDescription())
+                        .category(task.getCategory())
+                        .startDate(task.getStartDate())
+                        .status(updateStatusInIndex(task))
+                        .build())
                 .collect(Collectors.toList());
-    }
-
-    public TaskDto newTask(Long userId) {
-        return new TaskDto(userId, LocalDate.now(), false);
-    }
-
-    public void save(TaskDto taskDto) {
-        taskRepository.save(new Task(taskDto.getId(), authService.getLoggedUser(),
-                taskDto.getDescription(), taskDto.getCategory(), taskDto.getStartDate()));
     }
 
     public List<TaskDto> getDoneTasksDto() {
         Sort byFinalDateDesc = Sort.by(Sort.Direction.DESC, "finalDate");
         return taskRepository.getSortedTasks(true, authService.getLoggedUser().getId(), byFinalDateDesc).stream()
-                .map(task -> new TaskDto(task.getId(), task.getDescription(), task.getCategory(),
-                        task.getStartDate(), task.getFinalDate()))
+                .map(task -> TaskDto.builder()
+                        .id(task.getId())
+                        .description(task.getDescription())
+                        .category(task.getCategory())
+                        .startDate(task.getStartDate())
+                        .finalDate(task.getFinalDate())
+                        .build())
                 .collect(Collectors.toList());
+    }
+
+    public TaskDto newTask(Long userId) {
+        return TaskDto.builder()
+                .userId(userId)
+                .startDate(LocalDate.now())
+                .done(false)
+                .build();
+    }
+
+    public void save(TaskDto taskDto) {
+        taskRepository.save(Task.builder()
+                .id(taskDto.getId())
+                .user(authService.getLoggedUser())
+                .description(taskDto.getDescription())
+                .category(taskDto.getCategory())
+                .startDate(taskDto.getStartDate())
+                .build());
     }
 
     public void deleteTask(Long id) {

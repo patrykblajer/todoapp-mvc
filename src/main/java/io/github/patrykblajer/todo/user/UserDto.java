@@ -6,10 +6,11 @@ import lombok.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
+@Builder
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserDto {
     private Long id;
     @Pattern(regexp = "[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆŠŽ∂ð ,.'-]*",
@@ -30,23 +31,4 @@ public class UserDto {
     private LocalDate registrationDate;
     private boolean banned;
     private Role role;
-
-    public UserDto(Long id, String firstName, String lastName, String email, String city, LocalDate registrationDate, boolean banned) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.city = city;
-        this.registrationDate = registrationDate;
-        this.banned = banned;
-    }
-
-    public UserDto(Long id, String firstName, String lastName, String email, String password, String city) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.city = city;
-    }
 }

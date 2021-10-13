@@ -2,9 +2,7 @@ package io.github.patrykblajer.todo.user;
 
 import io.github.patrykblajer.todo.task.Task;
 import io.github.patrykblajer.todo.user.role.UserRole;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -14,8 +12,10 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Builder
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class User {
 
@@ -37,15 +37,4 @@ public class User {
     private List<Task> taskList;
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Set<UserRole> roles = new HashSet<>();
-
-    public User(Long id, String firstName, String lastName, String email, String password, String city, LocalDate registrationDate, boolean banned) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.city = city;
-        this.registrationDate = registrationDate;
-        this.banned = banned;
-    }
 }
