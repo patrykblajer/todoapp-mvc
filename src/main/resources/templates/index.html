@@ -117,18 +117,14 @@
             </td>
             <td><a th:text="#{${element.getStatus()}}"></a></td>
             <td>
-                <form action="#" th:action="@{'/done/{id}'(id=${element.getId()})}" th:method="delete">
-                    <button type="submit" id="done-task-btn"
-                            class="btn btn-success">Zakończ
-                    </button>
+                <form class="actions" th:action="@{'/done/{id}'(id=${element.getId()})}" th:method="delete">
+                    <input type="image" class="rounded" width="40" src="img/done.png" alt="Zakończ"/>
                 </form>
-                <form action="#" th:action="@{'/edit/{id}'(id=${element.getId()})}" th:method="edit">
-                    <button type="submit" id="edit-task-btn" class="btn btn-info">Edytuj (TODO)</button>
+                <form class="actions" th:action="@{'/edit/{id}'(id=${element.getId()})}" th:method="edit">
+                    <input type="image" class="rounded" width="40" src="img/edit.png" alt="Edytuj"/>
                 </form>
-                <form action="#" th:action="@{'/delete/{id}'(id=${element.getId()})}" th:method="delete">
-                    <button type="submit" id="delete-task-btn"
-                            class="btn btn-danger">Usuń
-                    </button>
+                <form class="actions"  th:action="@{'/delete/{id}'(id=${element.getId()})}" th:method="delete">
+                    <input type="image" class="rounded" width="40" src="img/delete.png" alt="Usuń"/>
                 </form>
             </td>
         </tr>
