@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <title>TODO - panel administracyjny</title>
+</head>
+<body>
+<div><img src="/img/logotype.png" alt="logotype" id="logotype"></div>
+<section id="pa-table">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Imię</th>
+            <th scope="col">Nazwisko</th>
+            <th scope="col">Adres e-mail</th>
+            <th scope="col">Data rejestracji</th>
+            <th scope="col">Status</th>
+            <th scope="col">Ranga</th>
+        </tr>
+        </thead>
+        <tbody th:each="user: ${allUsers}">
+        <tr>
+
+            <td><a th:text="${user.getId()}"></a></td>
+            <td><a th:text="${user.getFirstName()}"></a></td>
+            <td><a th:text="${user.getLastName()}"></a></td>
+            <td><a th:text="${user.getEmail()}"></a>
+                <br>
+                <form method="post" th:action="@{'/admin/editaccount/{id}'(id=${user.getId()})}">
+                    <button type="submit" th:id="admin-action-btn" name="submit" class="btn btn-primary btn-sm">Edytuj
+                        dane konta
+                    </button>
+                </form>
+            </td>
+            <td><a th:text="${user.getRegistrationDate()}"></a></td>
+            <td>
+                <a th:text="#{${user.isBanned()}}"></a>
+                <br>
+                <form method="post" th:if="${user.isBanned() && user.id != loggedUserId}"
+                      th:action="@{'/admin/changestatus/{id}?banned=false'(id=${user.getId()})}">
+                    <button type="submit" th:id="admin-action-btn" class="btn btn-success btn-sm">Aktywuj
+                    </button>
+                </form>
+                <form method="post" th:if="${!user.isBanned() && user.id != loggedUserId}"
+                      th:action="@{'/admin/changestatus/{id}?banned=true'(id=${user.getId()})}">
+                    <button type="submit" th:id="admin-action-btn" class="btn btn-danger btn-sm">Zbanuj
+                    </button>
+                </form>
+            </td>
+            <td>
+                <a th:text="#{${user.getRole()}}"></a>
+                <br>
+                <form method="post" th:if="${user.getRole().name() == 'ROLE_ADMIN' && user.id != loggedUserId}"
+                      th:action="@{'/admin/changerole/{id}?role=ROLE_USER'(id=${user.getId()})}">
+                    <button type="submit" th:id="admin-action-btn" class="btn btn-danger btn-sm">Zabierz admina
+                    </button>
+                </form>
+                <form method="post" th:if="${user.getRole().name() != 'ROLE_ADMIN' && user.id != loggedUserId}"
+                      th:action="@{'/admin/changerole/{id}?role=ROLE_ADMIN'(id=${user.getId()})}">
+                    <button type="submit" th:id="admin-action-btn" class="btn btn-success btn-sm">Przyznaj admina
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a href="/">
+            <button id="clear-btn" type="button" class="btn btn-warning">Wróć na główną</button>
+        </a>
+    </div>
+</section>
+</body>
+</html>

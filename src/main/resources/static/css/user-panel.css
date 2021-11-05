@@ -1,0 +1,33 @@
+.card {
+    width: 407px;
+    border: none;
+    border-radius: 10px;
+    background-color: #fff
+}
+
+.tasks-background {
+    background: #f2f5f8 !important;
+    color: #000 !important
+}
+
+.task-to-do-info {
+    font-size: 10px;
+    color: #000000
+}
+
+.task-done-info {
+    font-size: 10px;
+    color: #000000
+}
+
+.task-todo-number {
+    font-weight: 500
+}
+
+.task-done-number {
+    font-weight: 500
+}
+
+.btn-outline-primary{
+    font-weight: 450;
+}

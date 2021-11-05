@@ -6,49 +6,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user-panel.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
     <title>TODO - strona główna</title>
 </head>
 <body>
+<div class="alert alert-success" role="alert" th:id="successalert" th:text="#{|${addTaskSuccess}|}"
+     th:if="${addTaskSuccess}"></div>
+<div class="alert alert-success" role="alert" th:id="successalert" th:text="#{|${doneTaskSuccess}|}"
+     th:if="${doneTaskSuccess}"></div>
+<div class="alert alert-success" role="alert" th:id="successalert" th:text="#{|${deleteTaskSuccess}|}"
+     th:if="${deleteTaskSuccess}"></div>
+<div class="alert alert-danger" role="alert" th:id="dangeralert" th:text="#{|${badDescriptionAlert}|}"
+     th:if="${badDescriptionAlert}"></div>
+<div><img src="/img/logotype.png" alt="logotype" id="logotype"></div>
+<div th:id="weather-widget" th:if="${weatherWidget == true && !loggedUser.city.isEmpty()}"
+     class="card text-dark bg-light">
+    <div class="card-body">
+        <h5 class="card-title" th:text="*{weather.name}"></h5>
+        <p th:id="weather-widget-text-description" th:text="*{weather.description}" class="card-text"></p>
+        <p th:id="weather-widget-text-temperature" th:text="*{weather.temperature + '°C'}" class="card-text">°C</p>
+    </div>
+</div>
+<div th:id="weather-widget-error" th:text="#{|cityNotFound|}" th:if="${weatherWidget == false}"></div>
+<section id="main-user-panel">
+    <div class="container mt-5 d-flex justify-content-center">
+        <div class="card p-3">
+            <div class="d-flex align-items-center">
+                <div class="image"><img src="/img/profile_default.png"
+                                        class="rounded" width="155" alt="profile_default"></div>
+                <div class="ml-3 w-100">
+                    <h4 class="mb-0 mt-0" th:text="*{loggedUser.getFirstName() + ' ' + loggedUser.getLastName()}"></h4>
+                    <span th:text="*{loggedUser.getEmail()}"></span>
+                    <br><span
+                        th:text="'Data rejestracji: ' + *{loggedUser.getRegistrationDate()}"></span>
+                    <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white tasks-background">
+                        <div class="d-flex flex-column"><span class="task-to-do-info">Zadań do wykonania</span> <span
+                                class="task-todo-number" th:text="*{notDoneList.size()}"></span></div>
+                        <div class="d-flex flex-column"><span class="task-done-info">Wykonanych zadań</span> <span
+                                class="task-done-number" th:text="*{doneList.size()}"></span></div>
+                    </div>
+                    <div class="button mt-2 d-flex flex-row align-items-center">
+                        <a href="/editaccount">
+                            <button class="btn btn-sm btn-outline-primary">Ustawienia profilu</button>
+                        </a>
+                        <a href="/logout">
+                            <button class="btn btn-sm btn-outline-primary w-200">Wyloguj się</button>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
 <section>
     <div>
-        <div style="text-align: center;"><img
-                src="https://cdn.pixabay.com/photo/2020/01/21/18/39/todo-4783676_960_720.png"
-                alt="Girl in a jacket" width="260" height="120"></div>
-        <form id="form" th:action="@{/save}" method="post" onsubmit="alert('Zadanie zostało dodane.')" th:object="
-              ${newTask}
-        ">
+        <form id="main-form" th:action="@{/}" method="post" th:object="${newTask}" novalidate>
             <div class="col-12">
                 <div class="form-outline">
                     <label class="form-label" for="form1">Wprowadź opis zadania:</label>
-                    <input type="text" id="form1" th:required="required" th:field="*{description}"
+                    <input type="text" id="form1" th:field="*{description}"
                            class="form-control"/>
                 </div>
                 <div class="form-outline">
                     <label class="form-label" for="form2">Kiedy:</label>
-                    <input type="date" id="form2" th:field="*{startDate}" th:min="*{startDate}" class="form-control"/>
+                    <input type="date" id="form2" th:field="*{startDate}" th:min="*{startDate}"
+                           class="form-control"/>
                 </div>
                 <div>
                 </div>
                 <div class="form-outline">
                     <label class="form-label" for="form3">Kategoria:</label>
                     <select class="form-control" id="form3" th:field="*{category}" name="cat">
-                        <option th:each="category:${T(io.github.patrykblajer.todo.Category).values()}"
-                                th:text="${category.getCategoryInPlTranslation()}"
+                        <option th:each="category:${T(io.github.patrykblajer.todo.task.Category).values()}"
+                                th:text="#{${category}}"
                                 th:value="${category}">
                         </option>
                     </select>
                 </div>
             </div>
             <div class="text-center">
-                <button id="addbtn" type="submit" class="btn btn-primary">Dodaj</button>
-                <button id="resetbtn" type="reset" class="btn btn-primary">Reset</button>
+                <button id="add-task-btn" type="submit" class="btn btn-primary">Dodaj</button>
+                <button id="reset-form-btn" type="reset" class="btn btn-primary">Reset</button>
             </div>
         </form>
     </div>
 </section>
-<section id="table">
-    <table class="table mb-4">
+<section id="main-table">
+    <table class="table table-hover">
         <thead>
         <tr>
             <th scope="col">ID</th>
@@ -65,34 +111,33 @@
             <td><a th:text="${element.getId()}"></a></td>
             <td><a th:text="${element.getDescription()}"></a></td>
             <td><a th:text="${element.getStartDate()}"></a></td>
-            <td><a th:text="${element.getCategory().getCategoryInPlTranslation()}"></a></td>
+            <td><a th:text="#{${element.getCategory()}}"></a></td>
             <td>
                 <a th:text="${T(java.time.Period).between(T(java.time.LocalDate).now(), element.getStartDate()).getDays()}"></a>
             </td>
-            <td><a th:text="*{element.getStatus()}"></a></td>
+            <td><a th:text="#{${element.getStatus()}}"></a></td>
             <td>
-                <form action="#" th:action="@{'/done/{id}'(id=${element.getId()})}" th:method="delete">
-                    <button type="submit" id="finishbtn"
-                            onclick="alert('Zadanie zostało zakończone, zmieniło status i trafiło do Archiwum.')"
-                            class="btn btn-success ms-1">Zakończ
-                    </button>
+                <form class="actions" th:action="@{'/done/{id}'(id=${element.getId()})}" th:method="delete">
+                    <input type="image" class="rounded" width="40" src="img/done.png" alt="Zakończ"/>
                 </form>
-                <form action="#" th:action="@{'/edit/{id}'(id=${element.getId()})}" th:method="edit">
-                    <button type="submit" id="editbtn" class="btn btn-info">Edytuj(TODO)</button>
+                <form class="actions" th:action="@{'/edit/{id}'(id=${element.getId()})}" th:method="edit">
+                    <input type="image" class="rounded" width="40" src="img/edit.png" alt="Edytuj"/>
                 </form>
-                <form action="#" th:action="@{'/delete/{id}'(id=${element.getId()})}" th:method="delete">
-                    <button type="submit" id="deletebtn"
-                            onclick="alert('Zadanie usunięte.')"
-                            class="btn btn-danger">Usuń
-                    </button>
+                <form class="actions"  th:action="@{'/delete/{id}'(id=${element.getId()})}" th:method="delete">
+                    <input type="image" class="rounded" width="40" src="img/delete.png" alt="Usuń"/>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
-    <div class="text-center">
+    <div class="text-center" id="arch-btn">
         <a href="/archive">
             <button type="submit" class="btn btn-warning">Archwium</button>
+        </a>
+    </div>
+    <div class="text-center" id="admin-panel-btn" th:if="${#request.isUserInRole('ROLE_ADMIN')}">
+        <a href="/admin">
+            <button type="submit" class="btn btn-dark btn-sm">Panel administratora</button>
         </a>
     </div>
 </section>

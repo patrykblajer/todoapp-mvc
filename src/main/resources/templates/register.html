@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <title>TODO - rejestracja</title>
+</head>
+<body>
+<section th:id="login-panel">
+    <div>
+        <div><img src="/img/logotype.png" alt="logotype" id="logotype"></div>
+        <form id="login-form" th:action="@{/register}" th:object="${newUserDto}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="col-12">
+                <div class="form-outline">
+                    <label class="form-label" for="form1">Imię:</label>
+                    <input type="text" id="form1" th:field="*{firstName}" name="first_name"
+                           class="form-control"/>
+                    <div id="wrong-text-form" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                </div>
+                <div class="form-outline">
+                    <label class="form-label" for="form2">Nazwisko:</label>
+                    <input type="text" id="form2" th:field="*{lastName}" name="last_name"
+                           class="form-control"/>
+                    <div id="wrong-text-form" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                </div>
+                <div class="form-outline">
+                    <label class="form-label" for="form3">Adres e-mail:</label>
+                    <input type="text" id="form3" th:field="*{email}" name="email"
+                           class="form-control"/>
+                    <small id="email-info" class="form-text text-muted">Adres e-mail jest jednocześnie loginem.</small>
+                    <div id="wrong-text-form" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    <div id="wrong-text-form" th:text="#{|${emailExistAlert}|}" th:if="${emailExistAlert}"></div>
+                </div>
+                <div class="form-outline">
+                    <label class="form-label" for="form3">Miasto:</label>
+                    <input type="text" id="form3" th:field="*{city}" name="city"
+                           class="form-control"/>
+                    <small id="email-info" class="form-text text-muted">Dostarczymy wiadomości pogodowe, pole nie jest wymagane.</small>
+                </div>
+                <div class="form-outline">
+                    <label class="form-label" for="form4">Hasło:</label>
+                    <input type="password" id="form4" th:field="*{password}" name="password"
+                           class="form-control"/>
+                    <div id="wrong-text-form" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button id="send-btn" type="submit" class="btn btn-info">Wyślij</button>
+                <button id="clear-btn" type="reset" class="btn btn-warning">Wyczyść</button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

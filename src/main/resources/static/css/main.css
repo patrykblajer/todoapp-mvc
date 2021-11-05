@@ -1,0 +1,137 @@
+body {
+    background-color: #eee;
+}
+
+#logotype {
+    margin-top: 50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: auto;
+}
+
+#login-form {
+    margin-top: 50px;
+    margin-left: 380px;
+    width: 30%;
+    overflow: hidden;
+}
+
+#pa-table {
+    width: 70%;
+    margin-right: auto;
+    margin-top: 80px;
+    margin-left: auto;
+    text-align: center;
+}
+
+#main-form {
+    margin-top: 50px;
+    margin-left: 380px;
+    width: 30%;
+    overflow: hidden;
+}
+
+#weather-widget {
+    width: 350px;
+    margin: 50px 435px -55px auto;
+
+}
+
+#weather-widget-error {
+    width: 350px;
+    font-size: 10px;
+    margin: 50px 435px -55px auto;
+}
+
+#weather-widget-text-description {
+    line-height: 0.1;
+    display: inline;
+}
+
+#weather-widget-text-temperature {
+    margin-left: 225px;
+    font-weight: 450;
+    margin-top: -50px;
+    font-size: 30px;
+}
+
+#main-user-panel {
+    margin-top: 20px;
+    margin-right: 400px;
+    float: right;
+}
+
+#add-task-btn, #reset-form-btn {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+#main-table {
+    width: 70%;
+    margin-right: auto;
+    margin-top: 80px;
+    margin-left: auto;
+}
+
+#done-task-btn, #edit-task-btn, #delete-task-btn {
+    width: 50px;
+    margin: 2px;
+    padding: 10px;
+}
+
+#actions {
+    display: inline-block;
+}
+
+#arch-btn {
+    margin-bottom: 5px;
+}
+
+#admin-panel-btn {
+    margin-bottom: 40px;
+}
+
+.alert {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+    width: 40%;
+    text-align: center;
+    font-size: 110%;
+}
+
+#login-btn, #clear-btn, #send-btn {
+    margin-top: 15px;
+    width: 25%;
+    font-weight: 450;
+    margin-bottom: 15px;
+}
+
+#login-form {
+    margin-top: 50px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 30%;
+}
+
+#edit-account-buttons {
+    margin-top: 15px;
+}
+
+#admin-action-btn {
+    margin-top: 3px;
+    width: 155px;
+    text-align: center;
+    font-weight: 520;
+}
+
+#wrong-text-form {
+    font-size: 12px;
+    color: #ff0000;
+}
+
+.actions {
+    display:inline-block;
+}
