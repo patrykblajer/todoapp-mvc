@@ -118,13 +118,13 @@
             <td><a th:text="#{${element.getStatus()}}"></a></td>
             <td>
                 <form class="actions" th:action="@{'/done/{id}'(id=${element.getId()})}" th:method="delete">
-                    <input type="image" class="rounded" width="40" src="img/done.png" alt="Zakończ"/>
+                    <input type="image" class="rounded" width="30" src="img/done.png" alt="Zakończ"/>
                 </form>
                 <form class="actions" th:action="@{'/edit/{id}'(id=${element.getId()})}" th:method="edit">
-                    <input type="image" class="rounded" width="40" src="img/edit.png" alt="Edytuj"/>
+                    <input type="image" class="rounded" width="30" src="img/edit.png" alt="Edytuj"/>
                 </form>
                 <form class="actions"  th:action="@{'/delete/{id}'(id=${element.getId()})}" th:method="delete">
-                    <input type="image" class="rounded" width="40" src="img/delete.png" alt="Usuń"/>
+                    <input type="image" class="rounded" width="30" src="img/delete.png" alt="Usuń"/>
                 </form>
             </td>
         </tr>
