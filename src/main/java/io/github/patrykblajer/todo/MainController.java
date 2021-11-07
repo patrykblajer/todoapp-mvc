@@ -2,6 +2,7 @@ package io.github.patrykblajer.todo;
 
 import io.github.patrykblajer.todo.task.TaskDto;
 import io.github.patrykblajer.todo.task.TaskService;
+import io.github.patrykblajer.todo.task.TaskToEditDto;
 import io.github.patrykblajer.todo.user.authorization.AuthService;
 import io.github.patrykblajer.todo.weatherwidget.WeatherService;
 import org.springframework.stereotype.Controller;
@@ -76,6 +77,26 @@ public class MainController {
     public String setTaskDone(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         taskService.setTaskDone(id);
         redirectAttributes.addFlashAttribute("doneTaskSuccess", "doneTaskSuccess");
+        return "redirect:/";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String getTaskEditor(@PathVariable Long id, Model model) {
+        var taskToEdit = taskService.getTaskToEdit(id);
+        model.addAttribute("taskToEdit", taskToEdit);
+        return "edit";
+    }
+
+    @PostMapping("/edit")
+    public String editTask(@Valid TaskToEditDto taskToEditDto, BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("badDescriptionAlert", "badDescriptionAlert");
+            return "redirect:/edit/" + taskToEditDto.getId();
+        } else {
+            taskService.editTask(taskToEditDto);
+            redirectAttributes.addFlashAttribute("editTaskSuccess", "editTaskSuccess");
+        }
         return "redirect:/";
     }
 }
