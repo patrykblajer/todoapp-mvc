@@ -15,6 +15,8 @@
      th:if="${addTaskSuccess}"></div>
 <div class="alert alert-success" role="alert" th:id="successalert" th:text="#{|${doneTaskSuccess}|}"
      th:if="${doneTaskSuccess}"></div>
+<div class="alert alert-success" role="alert" th:id="successalert" th:text="#{|${editTaskSuccess}|}"
+     th:if="${editTaskSuccess}"></div>
 <div class="alert alert-success" role="alert" th:id="successalert" th:text="#{|${deleteTaskSuccess}|}"
      th:if="${deleteTaskSuccess}"></div>
 <div class="alert alert-danger" role="alert" th:id="dangeralert" th:text="#{|${badDescriptionAlert}|}"
@@ -117,13 +119,12 @@
             </td>
             <td><a th:text="#{${element.getStatus()}}"></a></td>
             <td>
-                <form class="actions" th:action="@{'/done/{id}'(id=${element.getId()})}" th:method="delete">
+                <form class="actions" th:action="@{'/done/{id}'(id=${element.getId()})}" th:method="post">
                     <input type="image" class="rounded" width="30" src="img/done.png" alt="Zakończ"/>
                 </form>
-                <form class="actions" th:action="@{'/edit/{id}'(id=${element.getId()})}" th:method="edit">
-                    <input type="image" class="rounded" width="30" src="img/edit.png" alt="Edytuj"/>
-                </form>
-                <form class="actions"  th:action="@{'/delete/{id}'(id=${element.getId()})}" th:method="delete">
+                <a th:href="@{'/edit/{id}'(id=${element.getId()})}">
+                    <input type="image" class="rounded" width="30" src="img/edit.png" alt="Edytuj"/></a>
+                <form class="actions" th:action="@{'/delete/{id}'(id=${element.getId()})}" th:method="delete">
                     <input type="image" class="rounded" width="30" src="img/delete.png" alt="Usuń"/>
                 </form>
             </td>

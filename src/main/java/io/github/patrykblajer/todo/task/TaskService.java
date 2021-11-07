@@ -4,6 +4,7 @@ import io.github.patrykblajer.todo.user.authorization.AuthService;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -90,5 +91,23 @@ public class TaskService {
             status = "expired";
         }
         return status;
+    }
+
+    public TaskToEditDto getTaskToEdit(Long id) {
+        var task = taskRepository.findById(id).orElseThrow();
+        return TaskToEditDto.builder()
+                .id(task.getId())
+                .description(task.getDescription())
+                .startDate(task.getStartDate())
+                .category(task.getCategory())
+                .build();
+    }
+
+    @Transactional
+    public void editTask(TaskToEditDto taskToEditDto) {
+        var task = taskRepository.findById(taskToEditDto.getId()).orElseThrow();
+        task.setDescription(taskToEditDto.getDescription());
+        task.setStartDate(taskToEditDto.getStartDate());
+        task.setCategory(taskToEditDto.getCategory());
     }
 }
