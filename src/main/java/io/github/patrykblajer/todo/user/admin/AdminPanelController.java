@@ -1,8 +1,8 @@
 package io.github.patrykblajer.todo.user.admin;
 
-import io.github.patrykblajer.todo.user.authorization.AuthService;
 import io.github.patrykblajer.todo.user.UserDto;
 import io.github.patrykblajer.todo.user.UserService;
+import io.github.patrykblajer.todo.user.authorization.AuthService;
 import io.github.patrykblajer.todo.user.role.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
