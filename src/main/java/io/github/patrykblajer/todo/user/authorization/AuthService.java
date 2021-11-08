@@ -1,7 +1,7 @@
 package io.github.patrykblajer.todo.user.authorization;
 
 import io.github.patrykblajer.todo.user.User;
-import io.github.patrykblajer.todo.user.UserDto;
+import io.github.patrykblajer.todo.user.role.dtos.UserDto;
 import io.github.patrykblajer.todo.user.UserService;
 import io.github.patrykblajer.todo.user.role.UserRole;
 import io.github.patrykblajer.todo.user.role.UserRoleService;

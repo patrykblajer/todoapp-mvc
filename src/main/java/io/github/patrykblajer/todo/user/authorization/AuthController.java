@@ -1,8 +1,10 @@
 package io.github.patrykblajer.todo.user.authorization;
 
-import io.github.patrykblajer.todo.user.UserDto;
-import io.github.patrykblajer.todo.user.UserPanelDto;
+import io.github.patrykblajer.todo.user.role.dtos.UserDto;
+import io.github.patrykblajer.todo.user.role.dtos.UserPanelDto;
 import io.github.patrykblajer.todo.user.UserService;
+import io.github.patrykblajer.todo.user.resetpassword.dtos.UserMailDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
 public class AuthController {
 
@@ -88,5 +91,31 @@ public class AuthController {
             return "editaccount";
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/resetpassword")
+    public String resetPassword(Model model) {
+        var userMailDto = new UserMailDto();
+        model.addAttribute("userMailDto", userMailDto);
+        return "resetpassword";
+    }
+
+    @PostMapping("/resetpassword")
+    public String sendPassword(@Valid @ModelAttribute UserMailDto email,
+                               BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            log.info("VALID ERROR EMAIL");
+            return "resetpassword";
+        } else if (userService.existsUserByEmail(email.getEmail())) {
+            //TODO
+            log.info("SEND");
+            model.addAttribute("emailsend", "emailsend");
+            return "redirect:/resetpassword";
+        } else {
+            log.info("NOT SEND");
+            model.addAttribute("emaildoesntexist", "emaildoesntexist");
+            return "resetpassword";
+
+        }
     }
 }

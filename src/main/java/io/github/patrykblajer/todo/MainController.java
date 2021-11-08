@@ -1,8 +1,8 @@
 package io.github.patrykblajer.todo;
 
-import io.github.patrykblajer.todo.task.TaskDto;
+import io.github.patrykblajer.todo.task.dtos.TaskDto;
 import io.github.patrykblajer.todo.task.TaskService;
-import io.github.patrykblajer.todo.task.TaskToEditDto;
+import io.github.patrykblajer.todo.task.dtos.TaskToEditDto;
 import io.github.patrykblajer.todo.user.authorization.AuthService;
 import io.github.patrykblajer.todo.weatherwidget.WeatherService;
 import org.springframework.stereotype.Controller;
