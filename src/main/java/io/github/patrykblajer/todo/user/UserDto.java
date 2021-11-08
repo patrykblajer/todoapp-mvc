@@ -27,6 +27,8 @@ public class UserDto {
     private String email;
     @Pattern(regexp = "^(?=.{8,30})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$", message = "{passwordInvalid}")
     private String password;
+    @Pattern(regexp = "^(?=.{8,30})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$", message = "{passwordInvalid}")
+    private String retypePassword;
     private String city;
     private LocalDate registrationDate;
     private boolean banned;

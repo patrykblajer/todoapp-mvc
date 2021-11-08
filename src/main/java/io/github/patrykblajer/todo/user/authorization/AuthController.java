@@ -45,6 +45,9 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("newUserDto", userDto);
             return "register";
+        } else if (!userDto.getPassword().equals(userDto.getRetypePassword())) {
+            model.addAttribute("passwordsNotSameAlert", "passwordNotSameAlert");
+            return "register";
         }
         try {
             userService.saveWithDefaultRole(userDto);
@@ -74,6 +77,9 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("userPanelDto", userPanelDto);
             return "editaccount";
+        } else if (!userPanelDto.getPassword().equals(userPanelDto.getRetypePassword())) {
+            model.addAttribute("passwordsNotSameAlert", "passwordNotSameAlert");
+            return "editaccount";
         }
         try {
             userService.editUserMailPass(userPanelDto);
@@ -81,6 +87,6 @@ public class AuthController {
             model.addAttribute("emailExistAlert", "emailExistAlert");
             return "editaccount";
         }
-        return "redirect:/logout";
+        return "redirect:/";
     }
 }

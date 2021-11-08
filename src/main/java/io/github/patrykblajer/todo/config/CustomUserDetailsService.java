@@ -1,6 +1,5 @@
 package io.github.patrykblajer.todo.config;
 
-import io.github.patrykblajer.todo.user.User;
 import io.github.patrykblajer.todo.user.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
