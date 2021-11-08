@@ -1,7 +1,9 @@
 package io.github.patrykblajer.todo.user.role;
 
+import io.github.patrykblajer.todo.user.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -19,5 +21,9 @@ public class UserRoleService {
 
     public void saveAll(Set<UserRole> roles) {
         userRoleRepository.saveAll(roles);
+    }
+
+    public List<UserRole> findUserRoleByUser(User user) {
+        return userRoleRepository.findUserRoleByUser(user);
     }
 }

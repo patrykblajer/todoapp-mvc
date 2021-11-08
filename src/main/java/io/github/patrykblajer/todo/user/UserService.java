@@ -128,6 +128,9 @@ public class UserService {
         var user = userRepository.getById(userPanelDto.getId());
         user.setEmail(userPanelDto.getEmail());
         user.setCity(userPanelDto.getCity());
-        user.setPassword(passwordEncoder.encode(userPanelDto.getPassword()));
+        if (!userPanelDto.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(userPanelDto.getPassword()));
+        }
+        authService.updateAuthToken(user);
     }
 }
