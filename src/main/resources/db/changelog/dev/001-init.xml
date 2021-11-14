@@ -61,5 +61,21 @@
                              referencedColumnNames="id"/>
             </column>
         </createTable>
+
+        <createTable tableName="reset_token">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="token" type="varchar(255)">
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_user_id__reset_token"
+                             unique="true"
+                             referencedTableName="user"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="expiry_date" type="date">
+            </column>
+        </createTable>
     </changeSet>
 </databaseChangeLog>

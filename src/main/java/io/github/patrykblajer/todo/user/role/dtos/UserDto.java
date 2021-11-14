@@ -1,9 +1,11 @@
-package io.github.patrykblajer.todo.user;
+package io.github.patrykblajer.todo.user.role.dtos;
 
 import io.github.patrykblajer.todo.user.role.Role;
 import lombok.*;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Builder

@@ -4,6 +4,8 @@ import io.github.patrykblajer.todo.user.authorization.AuthService;
 import io.github.patrykblajer.todo.user.role.Role;
 import io.github.patrykblajer.todo.user.role.UserRole;
 import io.github.patrykblajer.todo.user.role.UserRoleService;
+import io.github.patrykblajer.todo.user.role.dtos.UserDto;
+import io.github.patrykblajer.todo.user.role.dtos.UserPanelDto;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -132,5 +134,9 @@ public class UserService {
             user.setPassword(passwordEncoder.encode(userPanelDto.getPassword()));
         }
         authService.updateAuthToken(user);
+    }
+
+    public boolean existsUserByEmail(String email) {
+        return userRepository.existsUserByEmail(email);
     }
 }

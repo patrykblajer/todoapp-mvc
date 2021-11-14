@@ -1,5 +1,6 @@
-package io.github.patrykblajer.todo.task;
+package io.github.patrykblajer.todo.task.dtos;
 
+import io.github.patrykblajer.todo.task.Category;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 

@@ -1,7 +1,7 @@
 package io.github.patrykblajer.todo.user.authorization;
 
 import io.github.patrykblajer.todo.user.User;
-import io.github.patrykblajer.todo.user.UserDto;
+import io.github.patrykblajer.todo.user.role.dtos.UserDto;
 import io.github.patrykblajer.todo.user.UserService;
 import io.github.patrykblajer.todo.user.role.UserRole;
 import io.github.patrykblajer.todo.user.role.UserRoleService;
@@ -51,10 +51,10 @@ public class AuthService {
 
     public void updateAuthToken(User user) {
         List<UserRole> userRoles = userRoleService.findUserRoleByUser(user);
-        List<GrantedAuthority> actualAuth = userRoles.stream()
-                .map(userRole -> new SimpleGrantedAuthority(userRoles.toString()))
-                .collect(Collectors.toList());
-        Authentication newAuth = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(), actualAuth);
+        List<GrantedAuthority> actualAuthorities =
+                userRoles.stream().map(userRole -> new SimpleGrantedAuthority(userRole.getRole().name())).collect(Collectors.toList());
+        Authentication newAuth
+                = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(), actualAuthorities);
         SecurityContextHolder.getContext().setAuthentication(newAuth);
     }
 }
