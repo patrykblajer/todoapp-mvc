@@ -1,4 +1,4 @@
-package io.github.patrykblajer.todo.user.role.dtos;
+package io.github.patrykblajer.todo.user.dtos;
 
 import io.github.patrykblajer.todo.user.role.Role;
 import lombok.*;

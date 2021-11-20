@@ -1,10 +1,8 @@
 package io.github.patrykblajer.todo.user.authorization;
 
-import io.github.patrykblajer.todo.user.role.dtos.UserDto;
-import io.github.patrykblajer.todo.user.role.dtos.UserPanelDto;
 import io.github.patrykblajer.todo.user.UserService;
-import io.github.patrykblajer.todo.user.resetpassword.dtos.UserMailDto;
-import lombok.extern.slf4j.Slf4j;
+import io.github.patrykblajer.todo.user.dtos.UserDto;
+import io.github.patrykblajer.todo.user.dtos.UserPanelDto;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
-@Slf4j
 @Controller
 public class AuthController {
 
@@ -49,7 +46,7 @@ public class AuthController {
             model.addAttribute("newUserDto", userDto);
             return "register";
         } else if (!userDto.getPassword().equals(userDto.getRetypePassword())) {
-            model.addAttribute("passwordsNotSameAlert", "passwordNotSameAlert");
+            model.addAttribute("passwordsNotSameAlert", "passwordsNotSameAlert");
             return "register";
         }
         try {
@@ -62,7 +59,7 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/editaccount")
+    @GetMapping("/edit-account")
     public String editAccount(Model model) {
         var userDto = authService.getLoggedUserDto();
         var userPanelDto = UserPanelDto.builder()
@@ -72,50 +69,24 @@ public class AuthController {
                 .city(userDto.getCity())
                 .build();
         model.addAttribute("userPanelDto", userPanelDto);
-        return "editaccount";
+        return "edit-account";
     }
 
-    @PostMapping("/editaccount")
+    @PostMapping("/edit-account")
     public String editAccountSuccess(@Valid @ModelAttribute(name = "userPanelDto") UserPanelDto userPanelDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("userPanelDto", userPanelDto);
-            return "editaccount";
+            return "edit-account";
         } else if (!userPanelDto.getPassword().equals(userPanelDto.getRetypePassword())) {
-            model.addAttribute("passwordsNotSameAlert", "passwordNotSameAlert");
-            return "editaccount";
+            model.addAttribute("passwordsNotSameAlert", "passwordsNotSameAlert");
+            return "edit-account";
         }
         try {
             userService.editUserMailPass(userPanelDto);
         } catch (DataIntegrityViolationException e) {
             model.addAttribute("emailExistAlert", "emailExistAlert");
-            return "editaccount";
+            return "edit-account";
         }
         return "redirect:/";
-    }
-
-    @GetMapping("/resetpassword")
-    public String resetPassword(Model model) {
-        var userMailDto = new UserMailDto();
-        model.addAttribute("userMailDto", userMailDto);
-        return "resetpassword";
-    }
-
-    @PostMapping("/resetpassword")
-    public String sendPassword(@Valid @ModelAttribute UserMailDto email,
-                               BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            log.info("VALID ERROR EMAIL");
-            return "resetpassword";
-        } else if (userService.existsUserByEmail(email.getEmail())) {
-            //TODO
-            log.info("SEND");
-            model.addAttribute("emailsend", "emailsend");
-            return "redirect:/resetpassword";
-        } else {
-            log.info("NOT SEND");
-            model.addAttribute("emaildoesntexist", "emaildoesntexist");
-            return "resetpassword";
-
-        }
     }
 }

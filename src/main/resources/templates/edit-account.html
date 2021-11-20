@@ -11,7 +11,7 @@
 <section th:id="login-panel">
     <div>
         <div><img src="/img/logotype.png" alt="logotype" id="logotype"></div>
-        <form id="login-form" th:action="@{/editaccount}" th:object="${userPanelDto}" method="post">
+        <form id="login-form" th:action="@{/edit-account}" th:object="${userPanelDto}" method="post">
             <input type="hidden" th:field="*{id}"/>
             <div class="col-12">
                 <div class="form-outline">
