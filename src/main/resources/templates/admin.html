@@ -32,7 +32,7 @@
             <td><a th:text="${user.getLastName()}"></a></td>
             <td><a th:text="${user.getEmail()}"></a>
                 <br>
-                <form method="post" th:action="@{'/admin/editaccount/{id}'(id=${user.getId()})}">
+                <form method="post" th:action="@{'/admin/edit-account/{id}'(id=${user.getId()})}">
                     <button type="submit" th:id="admin-action-btn" name="submit" class="btn btn-primary btn-sm">Edytuj
                         dane konta
                     </button>
@@ -43,12 +43,12 @@
                 <a th:text="#{${user.isBanned()}}"></a>
                 <br>
                 <form method="post" th:if="${user.isBanned() && user.id != loggedUserId}"
-                      th:action="@{'/admin/changestatus/{id}?banned=false'(id=${user.getId()})}">
+                      th:action="@{'/admin/change-status/{id}?banned=false'(id=${user.getId()})}">
                     <button type="submit" th:id="admin-action-btn" class="btn btn-success btn-sm">Aktywuj
                     </button>
                 </form>
                 <form method="post" th:if="${!user.isBanned() && user.id != loggedUserId}"
-                      th:action="@{'/admin/changestatus/{id}?banned=true'(id=${user.getId()})}">
+                      th:action="@{'/admin/change-status/{id}?banned=true'(id=${user.getId()})}">
                     <button type="submit" th:id="admin-action-btn" class="btn btn-danger btn-sm">Zbanuj
                     </button>
                 </form>
@@ -57,12 +57,12 @@
                 <a th:text="#{${user.getRole()}}"></a>
                 <br>
                 <form method="post" th:if="${user.getRole().name() == 'ROLE_ADMIN' && user.id != loggedUserId}"
-                      th:action="@{'/admin/changerole/{id}?role=ROLE_USER'(id=${user.getId()})}">
+                      th:action="@{'/admin/change-role/{id}?role=ROLE_USER'(id=${user.getId()})}">
                     <button type="submit" th:id="admin-action-btn" class="btn btn-danger btn-sm">Zabierz admina
                     </button>
                 </form>
                 <form method="post" th:if="${user.getRole().name() != 'ROLE_ADMIN' && user.id != loggedUserId}"
-                      th:action="@{'/admin/changerole/{id}?role=ROLE_ADMIN'(id=${user.getId()})}">
+                      th:action="@{'/admin/change-role/{id}?role=ROLE_ADMIN'(id=${user.getId()})}">
                     <button type="submit" th:id="admin-action-btn" class="btn btn-success btn-sm">Przyznaj admina
                     </button>
                 </form>

@@ -13,7 +13,7 @@
 <section th:id="login-panel">
     <div>
         <div><img src="/img/logotype.png" alt="logotype" id="logotype"></div>
-        <form id="login-form" th:action="@{/admin/editaccount/success}" th:object="${userToEdit}" method="post">
+        <form id="login-form" th:action="@{/admin/edit-account/success}" th:object="${userToEdit}" method="post">
             <input type="hidden" th:field="*{id}"/>
             <div class="col-12">
                 <div class="form-outline">

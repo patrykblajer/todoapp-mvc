@@ -1,6 +1,6 @@
 package io.github.patrykblajer.todo.user.admin;
 
-import io.github.patrykblajer.todo.user.role.dtos.UserDto;
+import io.github.patrykblajer.todo.user.dtos.UserDto;
 import io.github.patrykblajer.todo.user.UserService;
 import io.github.patrykblajer.todo.user.authorization.AuthService;
 import io.github.patrykblajer.todo.user.role.Role;
@@ -31,29 +31,29 @@ public class AdminPanelController {
     }
 
     @Transactional
-    @PostMapping("/changestatus/{id}")
+    @PostMapping("/change-status/{id}")
     public String changeStatus(@PathVariable Long id, @RequestParam boolean banned) {
         userService.changeUserStatus(id, banned);
         return "redirect:/admin";
     }
 
     @Transactional
-    @PostMapping("/changerole/{id}")
+    @PostMapping("/change-role/{id}")
     public String changeRole(@PathVariable Long id, @RequestParam Role role) {
         userService.changeUserRole(id, role);
         return "redirect:/admin";
     }
 
     @Transactional
-    @PostMapping("/editaccount/{id}")
+    @PostMapping("/edit-account/{id}")
     public String editAccountById(@PathVariable Long id, Model model) {
         var userToEdit = userService.findUserDtoById(id);
         model.addAttribute("userToEdit", userToEdit);
-        return "admineditor";
+        return "admin-editor";
     }
 
     @Transactional
-    @PostMapping("/editaccount/success")
+    @PostMapping("/edit-account/success")
     public String editAccountSuccess(UserDto userDto) {
         userService.editUser(userDto);
         return "redirect:/admin";

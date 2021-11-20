@@ -62,5 +62,12 @@
             <column name="start_date" value="2021-10-14"/>
             <column name="done" value="false"/>
         </insert>
+
+        <insert tableName="reset_token">
+            <column name="id" value="1"/>
+            <column name="user_id" value="1"/>
+            <column name="token" value="asd"/>
+            <column name="expiry_date" value="2021-11-17 21:33:00"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>
