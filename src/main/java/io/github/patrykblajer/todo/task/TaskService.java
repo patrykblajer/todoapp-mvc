@@ -112,4 +112,11 @@ public class TaskService {
         task.setStartDate(taskToEditDto.getStartDate());
         task.setCategory(taskToEditDto.getCategory());
     }
+
+    @Transactional
+    public void setTaskNotDone(Long id) {
+        var task = taskRepository.getById(id);
+        task.setDone(false);
+        task.setFinalDate(null);
+    }
 }
