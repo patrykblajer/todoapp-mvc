@@ -104,11 +104,13 @@ public class UserService {
         return users;
     }
 
+    @Transactional
     public void changeUserStatus(Long id, boolean banned) {
         var user = userRepository.getById(id);
         user.setBanned(banned);
     }
 
+    @Transactional
     public void changeUserRole(Long id, Role role) {
         var user = userRepository.getById(id);
         var roles = user.getRoles().stream()
@@ -117,6 +119,7 @@ public class UserService {
         userRoleService.saveAll(roles);
     }
 
+    @Transactional
     public void editUser(UserDto userDto) {
         var user = getUserById(userDto.getId());
         user.setFirstName(userDto.getFirstName());
