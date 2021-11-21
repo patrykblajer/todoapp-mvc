@@ -1,7 +1,7 @@
 package io.github.patrykblajer.todo;
 
-import io.github.patrykblajer.todo.task.dtos.TaskDto;
 import io.github.patrykblajer.todo.task.TaskService;
+import io.github.patrykblajer.todo.task.dtos.TaskDto;
 import io.github.patrykblajer.todo.task.dtos.TaskToEditDto;
 import io.github.patrykblajer.todo.user.authorization.AuthService;
 import io.github.patrykblajer.todo.weatherwidget.WeatherService;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @Controller
@@ -44,7 +43,6 @@ public class MainController {
         return "index";
     }
 
-    @Transactional
     @PostMapping
     public String add(@Valid TaskDto taskDto, BindingResult bindingResult,
                       RedirectAttributes redirectAttributes) {
@@ -70,7 +68,6 @@ public class MainController {
         return "redirect:/archive";
     }
 
-    @Transactional
     @PostMapping("/delete/{id}")
     public String deleteTask(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         taskService.deleteTask(id);
@@ -78,7 +75,6 @@ public class MainController {
         return "redirect:/";
     }
 
-    @Transactional
     @PostMapping("/done/{id}")
     public String setTaskDone(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         taskService.setTaskDone(id);

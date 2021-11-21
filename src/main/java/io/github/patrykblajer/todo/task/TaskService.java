@@ -57,6 +57,7 @@ public class TaskService {
                 .build();
     }
 
+    @Transactional
     public void save(TaskDto taskDto) {
         taskRepository.save(Task.builder()
                 .id(taskDto.getId())
@@ -67,10 +68,12 @@ public class TaskService {
                 .build());
     }
 
+    @Transactional
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
     }
 
+    @Transactional
     public void setTaskDone(Long id) {
         var task = taskRepository.getById(id);
         task.setDone(true);
