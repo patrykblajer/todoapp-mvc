@@ -64,6 +64,12 @@ public class MainController {
         return "archive";
     }
 
+    @PostMapping("/archive/restore-task/{id}")
+    public String restoreDoneTask(@PathVariable Long id) {
+        taskService.setTaskNotDone(id);
+        return "redirect:/archive";
+    }
+
     @Transactional
     @PostMapping("/delete/{id}")
     public String deleteTask(@PathVariable Long id, RedirectAttributes redirectAttributes) {

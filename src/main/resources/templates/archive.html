@@ -30,7 +30,13 @@
             <td><a th:text="#{${element.getCategory()}}"></a></td>
             <td><a th:text="${element.getStartDate()}"></a></td>
             <td><a th:text="${element.getFinalDate()}"></a></td>
-            <td><a th:text="${T(java.time.Period).between(element.getStartDate(), element.getFinalDate()).getDays()}"></a></td>
+            <td>
+                <a th:text="${T(java.time.Period).between(element.getStartDate(), element.getFinalDate()).getDays()}"></a>
+                <form method="post" th:action="@{'/archive/restore-task/{id}'(id=${element.getId()})}">
+                    <button type="submit" th:id="admin-action-btn" class="btn btn-success btn-sm">Przywróć zadanie
+                    </button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
